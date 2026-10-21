@@ -1,0 +1,34 @@
+{
+  "name": "@oneir/hdf_config",
+  "description": "HDF configuration (hosts and drivers) for the oneir product",
+  "version": "1.0.0",
+  "license": "Apache License 2.0",
+  "publishAs": "code-segment",
+  "segment": {
+    "destPath": "oneir/hdf_config"
+  },
+  "dirs": {},
+  "scripts": {},
+  "component": {
+    "name": "oneir_hdf_config",
+    "subsystem": "oneir",
+    "syscap": [],
+    "features": [],
+    "adapted_system_type": [ "standard" ],
+    "rom": "",
+    "ram": "",
+    "deps": {
+      "components": [
+        "hdf_core"
+      ],
+      "third_party": []
+    },
+    "build": {
+      "sub_component": [
+        "//oneir/hdf_config/uhdf:hdf_config"
+      ],
+      "inner_kits": [],
+      "test": []
+    }
+  }
+}
