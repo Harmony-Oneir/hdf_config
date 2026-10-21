@@ -1,0 +1,64 @@
+/*
+ * oneir: минимальный список HDF-хостов.
+ * Основа: vendor/ohemu/virt/hdf_config/uhdf/device_info.hcs.
+ * Оставлены только шаблоны и графические хосты; остальные добавлять по мере появления драйверов.
+ */
+ root {
+    device_info {
+        match_attr = "hdf_manager";
+        template host {
+            hostName = "";
+            priority = 100;
+            uid = "";
+            gid = [""];
+            caps = [""];
+            critical = [];
+            template device {
+                template deviceNode {
+                    policy = 0;
+                    priority = 100;
+                    preload = 0;
+                    permission = 0664;
+                    moduleName = "";
+                    serviceName = "";
+                    deviceMatchAttr = "";
+                }
+            }
+        }
+
+        /* Аллокатор буферов: загружает libdisplay_buffer_vdi_impl.z.so (oneir/display_buffer). */
+        allocator :: host {
+            hostName = "allocator_host";
+            priority = 40;
+            gid = ["allocator_host", "graphics"];
+            allocator_device :: device {
+                device0 :: deviceNode {
+                    policy = 2;
+                    priority = 160;
+                    moduleName = "liballocator_driver_1.0.z.so";
+                    serviceName = "allocator_service";
+                }
+            }
+        }
+
+        /* Композитор: включить, когда будет готов libdisplay_composer_vdi_impl.z.so.
+        display_composer :: host {
+            hostName = "composer_host";
+            priority = 40;
+            processPriority = -8;
+            threadPriority = 1;
+            caps = ["SYS_NICE", "SYS_ADMIN"];
+            uid = ["composer_host"];
+            gid = ["composer_host", "graphics", "vendor_mpp_driver"];
+            composer_device :: device {
+                device0 :: deviceNode {
+                    policy = 2;
+                    priority = 160;
+                    moduleName = "libdisplay_composer_driver_1.0.z.so";
+                    serviceName = "display_composer_service";
+                }
+            }
+        }
+        */
+    }
+}
