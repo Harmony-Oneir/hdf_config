@@ -2,6 +2,10 @@
  * oneir: минимальный список HDF-хостов.
  * Основа: vendor/ohemu/virt/hdf_config/uhdf/device_info.hcs.
  * Оставлены только шаблоны и графические хосты; остальные добавлять по мере появления драйверов.
+ *
+ * ВАЖНО: номера хостов (-i в hdf_devhost.cfg) вычисляются из этого файла.
+ * После любого изменения ставить hdf_default.hcb и hdf_devhost.cfg вместе
+ * и перезапускать hdf_devmgr.
  */
  root {
     device_info {
@@ -41,15 +45,15 @@
             }
         }
 
-        /* Композитор: включить, когда будет готов libdisplay_composer_vdi_impl.z.so.
+        /* Композитор: загружает libdisplay_composer_vdi_impl.z.so (oneir/display_composer). */
         display_composer :: host {
             hostName = "composer_host";
-            priority = 40;
+            priority = 41;
             processPriority = -8;
             threadPriority = 1;
             caps = ["SYS_NICE", "SYS_ADMIN"];
             uid = ["composer_host"];
-            gid = ["composer_host", "graphics", "vendor_mpp_driver"];
+            gid = ["composer_host", "graphics"];
             composer_device :: device {
                 device0 :: deviceNode {
                     policy = 2;
@@ -59,6 +63,5 @@
                 }
             }
         }
-        */
     }
 }
